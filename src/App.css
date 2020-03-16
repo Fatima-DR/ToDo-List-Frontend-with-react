@@ -1,5 +1,25 @@
+@media only screen and (max-width: 1000px){
+  body {
+      background-color: lightpink;
+  }
+ 
+}
+@media only screen and (max-width: 400px){
+  body {
+      background-color: rgb(245, 168, 194);
+  }
+}
+
 .App {
   text-align: center;
+  font-size: medium;
+  border: solid;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  padding-left: 100px;
+  padding-right: 100px;
+  border-color: lightslategray;
+  border-radius: 25px;
 }
 
 .App-logo {
@@ -7,14 +27,8 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
-  background-color: #282c34;
+  background-color: plum; 
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,15 +38,23 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+
+h1 {
+  text-align: center;
+  font-size: 50p;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input.largerCheckbox { 
+  width: 30px; 
+  height: 30px; 
+} 
+
+.button-addon2 {
+  width: 60px;
+  height:20px
+}
+
+main {
+  margin-left: 20%;
+  margin-right: 20%;
 }
