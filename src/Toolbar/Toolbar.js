@@ -1,14 +1,29 @@
 import React from 'react';
 
-function Toolbar() {
+function Toolbar(props) {
     return (
-        <div class="input-group mb-3" id="textbanner">
-            <input type="text" class="form-control" placeholder="Create Task" aria-label="Create Task"
-                aria-describedby="button-addon2"></input>
-            <div class="input-group-append">
-                <button class="btn btn-secondary" type="button" id="button-addon2">Add Task</button>
+         <div className="container">
+            <div className="row">
+                <div className="col -12">
+                    <div className="form-group " id="textbanner">
+                        <input type="text" className="form-control" placeholder="Create Task" aria-label="Create Task"
+                            aria-describedby="button-addon2" />
+                    </div>
+                </div>
             </div>
-        </div>
+            <div className="row">
+                <div className="col -12">
+                    <div className="form-group form-check">
+                        <label className="form-check-label" htmlFor="urgentCheck1">Urgent?</label><br />
+                        <input type="checkbox" className="form-check-input" id="urgemtCheck1" />
+                        <input type="date" className="form-control" />
+                        <button className="btn btn-secondary" type="button" id="button-addon2">Add Task{props.count}</button>
+                    </div>
+                </div>
+            </div>
+         </div>
+
+
     )
 }
 
