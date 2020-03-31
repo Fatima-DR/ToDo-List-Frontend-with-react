@@ -7,7 +7,7 @@ function Header() {
         <header>
             <h1 id="main title"> ToDo List App</h1>
             <br />
-            <h4> Keeping all your things organised!</h4>
+            <h4> Keeping you organised!</h4>
 
 
         </header>
