@@ -16,6 +16,14 @@ import Toolbar from "./Toolbar/Toolbar";
 //know which button was clicked
 //complete relevant object from state
 
+//adding a new task
+//ensure the add new task component is controlled so that it knows about what is being enterred in the form 
+//click on the add button 
+//need to know this happened
+//what was the state of the form when the click happens? (done)
+//adds the new tassk (constructed based on the data in the form )to the task list
+
+
 function App() {
 
   const [tasks, setTasks] = useState([
@@ -46,13 +54,30 @@ function App() {
 
     setTasks(newTask);
   }
+  //create a new Tas object   based on th data passed in the parameter
+  //create a new array which includes the new task
+  //use the set task function to update state
+  const addNewTask = (text, urgent, date) => {
+    const newTask = {
+      Text: text, 
+      urgent: urgent,  
+      dueDate: date, 
+      completed: false,
+      id: Math.random() * 1000 // TODO: UUID - use the uuid package from NPM to generate UUID 
+    }
+
+    const newTasks = [...tasks, newTask];
+    console.log(newTasks);
+    
+    setTasks(newTasks);
+  }
   return (
     <div className="App">
       <Header />
       <br />
       <div>
         <br />
-        <Toolbar />
+        <Toolbar addNewTaskFunc = {addNewTask}  />
         <div className="container">
 
           <br />
