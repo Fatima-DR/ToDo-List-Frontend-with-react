@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 
-//Any component can keep track of its own state, so long as parent components don't need to know about this state 
-
-//this component is now a controlled component (controlled form)
 
 function Toolbar(props) {
-    //creating initial state
     const [taskText, setTaskText] = useState("");
     const isEnabled = taskText.length > 0;
     const [date, setDate] = useState(""); // TODO: use moment to set the initial date to todays date
-    const [checked, setChecked] = useState(false); 
+    const [checked, setChecked] = useState(false);
 
     const handleTextChange = (event) => {
         setTaskText(event.target.value);
     }
 
     const handleDateChange = (event) => {
-        setDate(event.target.value);
+        setDate(event.target.value)
+
     }
 
     const handleUrgentChange = (event) => {
@@ -25,13 +22,10 @@ function Toolbar(props) {
 
     const handleAddTask = () => {
         props.addNewTaskFunc(taskText, checked, date);
-        
-        
-        //add can you set the state of the form elements back to their initial state 
-        //should you be able to add new tasks if the form fields haven't been changed ie, task is an empty string
-        //setTaskText ("") (done)
+        setTaskText("");
+        setDate("");
+        setChecked(false);
     }
-    //make sure we can lsiten to any events that happen in the form, update state accordingly
 
     return (
         <div className="container">
