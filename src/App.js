@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import './App.css';
 import Header from "./Header/Header";
 import TaskCount from "./TaskCount/TaskCount";
@@ -9,50 +10,85 @@ import Toolbar from "./Toolbar/Toolbar";
 
 function App() {
 
-  const [tasks, setTasks] = useState([
-    { Text: "Take kids to school", urgent: true, dueDate: "2020-04-02", completed: true, id: 1 },
-    { Text: "Go to work", urgent: false, dueDate: "2020-04-03", completed: false, id: 2 },
-    { Text: "Finish Project", urgent: true, dueDate: "2020-04-04", completed: false, id: 3 },
+  const [tasks, setTasks] = useState([ ])
 
-  ])
-
-
-  const deleteTask = (id) => {
-    const filteredTasks = tasks.filter((task) => {
-      return task.id !== id;
-
+  useEffect(() => {
+    axios.get("https://mgen6vrtp0.execute-api.eu-west-1.amazonaws.com/dev/tasks")
+    .then(response => {
+      console.log("success", response);
+      setTasks(response.data);
     })
+    .catch(err => {
+      console.log("Error",err)
+    })
+  }, [])
 
-    setTasks(filteredTasks);
+
+  
+// fetch tasks from back end  
+  const deleteTask = id => {
+    // issue delete request to my api from postman
+    // if resoves then filter my tasks on the frontend to remove the task with given id
+    axios.delete(`https://mgen6vrtp0.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`)
+    .then(response => {
+      const filteredTasks = tasks.filter(task => {
+        return task.TaskID !== id;
+  
+      })
+  
+      setTasks(filteredTasks);
+    })
+    .catch(err => {
+      console.log("API error", err )
+    })
   }
+    
 
   const completeTask = (id) => {
-    const newTask = tasks.map(task => {
-      if (task.id === id) {
-        task.completed = true;
-      }
-      return task;
 
-    });
-
-    setTasks(newTask);
+    axios.put(`https://mgen6vrtp0.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`,{
+      Completed: true
+    })
+    .then((response) => {
+      const newTask = tasks.map(task => {
+        if (task.TaskID === id) {
+          console.log(`Updated task ${id}`, response)
+          task.Completed = 1;
+        }
+        return task;
+  
+      });
+  
+      setTasks(newTask);
+    })
+    .catch((err) => {
+      console.log("Error updating completed")
+    })
   }
 
   const addNewTask = (text, urgent, date) => {
-    const newTask = {
-      Text: text,
-      urgent: urgent,
-      dueDate: date,
-      completed: false,
-      id: Math.random() * 1000 // TODO: UUID - use the uuid package from NPM to generate UUID 
-    }
 
-    const newTasks = [...tasks, newTask];
+  axios.post("https://mgen6vrtp0.execute-api.eu-west-1.amazonaws.com/dev/tasks", {
+    Task: text,
+    Urgent: urgent,
+    DueDate: date,
+  })
+    .then(response => {
+      const newTask = response.date
+      const newTasks = [...tasks, newTask];
     console.log(newTasks);
+      console.log("saved", response)
+      setTasks(newTasks);
+    })
+  
+    .catch(err => {
+      console.log("error creating task", err)
+    })
 
-    setTasks(newTasks);
-  }
-  return (
+  } 
+
+ 
+  return (  
     <div className="App">
       <Header />
       <br />
@@ -66,7 +102,7 @@ function App() {
 
           {tasks.map((task) => {
             return (
-              <Tasks key={task.id} deleteTaskFunc={deleteTask} completeTaskFunc={completeTask} text={task.Text} urgent={task.urgent} dueDate={task.dueDate} completed={task.completed} id={task.id} />
+              <Tasks key={task.TaskID} deleteTaskFunc={deleteTask} completeTaskFunc={completeTask} text={task.Task} urgent={task.Urgent} dueDate={task.DueDate} completed={task.Completed} id={task.TaskID} />
             );
           })}
         </div>

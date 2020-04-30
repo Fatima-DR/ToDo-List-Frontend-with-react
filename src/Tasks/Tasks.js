@@ -18,14 +18,14 @@ function Task(props) {
                 {props.text}
             </div>
             <div className="col -4 col md-3">
-                {props.urgent === true ? "URGENT" : " "}
+                {props.urgent === 1 ? "URGENT" : " "}
             </div>
             <div className="col -4 col md-3">
                 {moment(props.dueDate).format("Do MMM YYYY")}
             </div>
             <div className="col -4 col md-2">
-                {props.completed === false && <input type="checkbox" className="largerCheckbox" name="checkBox2" onClick={handleCompleteClick} />}
-                {props.completed === true && <button className="btn btn-secondary" type="button" id="button-addon2" onClick={handleDeleteClick}>delete</button>}
+                {props.completed === 0 && <input type="checkbox" className="largerCheckbox" name="checkBox2" onClick={handleCompleteClick} />}
+                {props.completed === 1 && <button className="btn btn-secondary" type="button" id="button-addon2" onClick={handleDeleteClick}>delete</button>}
             </div>
         </div>
 
