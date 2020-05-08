@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './App.css';
 import Header from "./Header/Header";
@@ -10,10 +10,10 @@ import Toolbar from "./Toolbar/Toolbar";
 
 function App() {
 
-  const [tasks, setTasks] = useState([ ])
+  const [tasks, setTasks] = useState([])
 
   useEffect(() => {
-    axios.get("https://mgen6vrtp0.execute-api.eu-west-1.amazonaws.com/dev/tasks")
+    axios.get("https://rgdvcax7lf.execute-api.eu-west-1.amazonaws.com/dev/tasks")
     .then(response => {
       console.log("success", response);
       setTasks(response.data);
@@ -26,12 +26,14 @@ function App() {
 
   
 // fetch tasks from back end  
-  const deleteTask = id => {
+  const deleteTask = (id) => {
+    console.log("Deleting task", id);
     // issue delete request to my api from postman
     // if resoves then filter my tasks on the frontend to remove the task with given id
-    axios.delete(`https://mgen6vrtp0.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`)
+    axios.delete(`https://rgdvcax7lf.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`)
     .then(response => {
       const filteredTasks = tasks.filter(task => {
+        console.log("successfully removed task", response)
         return task.TaskID !== id;
   
       })
@@ -46,7 +48,7 @@ function App() {
 
   const completeTask = (id) => {
 
-    axios.put(`https://mgen6vrtp0.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`,{
+    axios.put(`https://rgdvcax7lf.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`,{
       Completed: true
     })
     .then((response) => {
@@ -68,7 +70,7 @@ function App() {
 
   const addNewTask = (text, urgent, date) => {
 
-  axios.post("https://mgen6vrtp0.execute-api.eu-west-1.amazonaws.com/dev/tasks", {
+  axios.post("https://rgdvcax7lf.execute-api.eu-west-1.amazonaws.com/dev/tasks", {
     Task: text,
     Urgent: urgent,
     DueDate: date,
@@ -77,7 +79,6 @@ function App() {
       const newTask = response.date
       const newTasks = [...tasks, newTask];
     console.log(newTasks);
-      console.log("saved", response)
       setTasks(newTasks);
     })
   
@@ -97,12 +98,17 @@ function App() {
         <Toolbar addNewTaskFunc={addNewTask} />
         <div className="container">
 
-          <br />
-          <br />
-
-          {tasks.map((task) => {
+          {tasks.map(task => {
             return (
-              <Tasks key={task.TaskID} deleteTaskFunc={deleteTask} completeTaskFunc={completeTask} text={task.Task} urgent={task.Urgent} dueDate={task.DueDate} completed={task.Completed} id={task.TaskID} />
+              <Tasks 
+              key={task.TaskID} 
+              deleteTaskFunc={deleteTask} 
+              completeTaskFunc={completeTask} 
+              text={task.Task} 
+              urgent={task.Urgent} 
+              dueDate={task.DueDate} 
+              completed={task.Completed} 
+              id={task.TaskID}/>
             );
           })}
         </div>
